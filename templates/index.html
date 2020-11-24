@@ -13,11 +13,24 @@
         </form>
     </div>
 
-    {% for memo in memos %}
-    <div>
-        <p>{{ memo.content }}</p>
-        <p>{{ memo.update_datetime|date:"Y/m/d H:m:s" }}</p>
+    <div class="top_box">
+        {% for memo in page %}
+            <div>
+                <p>{{ memo.content }}</p>
+                <p>{{ memo.update_datetime|date:"Y/m/d H:m:s" }}</p>
+            </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+
+    <div class=""paginator>
+        {% for num in page.paginator.page_range %}
+            {% if page.number == num %}
+                <span class="current">{{ page.number }}</span>
+            {% else %}
+                <a href="{% url 'index' %}{{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
 </body>
 </html>

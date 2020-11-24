@@ -5,13 +5,16 @@ from .forms import PostForm
 
 from .models import *
 
+from django.core.paginator import Paginator
+
 
 # Create your views here.
 
-def index(request):
+def index(request, now_page=1):
     memos = Memo.objects.all()
+    page = Paginator(memos, 10)
     params = {
-        'memos': memos,
+        'page': page.get_page(now_page),
         'form': PostForm()
     }
     return render(request, 'index.html', params)
