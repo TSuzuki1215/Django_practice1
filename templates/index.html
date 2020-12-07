@@ -4,7 +4,7 @@
         <h3>メモ内容</h3>
         <form action="{% url 'post' %}" method="post">
             {% csrf_token %}
-            <div class=""text-memo>
+            <div class="text-memo">
                 {{ form.content }}
             </div>
             <div class="post-form">
@@ -12,6 +12,20 @@
             </div>
         </form>
     </div>
+
+    <form action="{% url 'set_record_number' %}" method="post">
+        {% csrf_token %}
+        <div class="slct01">
+            {{ record_number_form.record_number }}
+        </div>
+    </form>
+
+    <form action="{% url 'set_order_option' %}" method="post">
+        {% csrf_token %}
+        <div class=""slct02>
+            {{ order_option_form.order_option }}
+        </div>
+    </form>
 
     <div class="top_box">
         {% for memo in page %}
@@ -22,14 +36,25 @@
         {% endfor %}
     </div>
 
-    <div class=""paginator>
+    <div class="paginator">
+        {% if page.has_previous == True %}
+            <a href="{% url 'index' %}{{ page.previous_page_number }}">前へ</a>
+        {% else %}
+
+        {% endif %}
         {% for num in page.paginator.page_range %}
+
             {% if page.number == num %}
                 <span class="current">{{ page.number }}</span>
             {% else %}
                 <a href="{% url 'index' %}{{ num }}">{{ num }}</a>
             {% endif %}
         {% endfor %}
+        {% if page.has_next == True %}
+            <a href="{% url 'index' %}{{ page.next_page_number }}">次へ</a>
+        {% else %}
+
+        {% endif %}
     </div>
 
 </body>
